@@ -11,4 +11,12 @@
     public static function sandbox(){
       View::make('helloworld.html');
     }
+
+    public static function frontpage(){
+      View::make('suunnitelmat/etusivu.html');
+    }
+
+    public static function createAccount(){
+      View::make('suunnitelmat/rekisteroidy.html');
+    }
   }
