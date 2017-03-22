@@ -5,6 +5,12 @@ Yleisiä linkkejä:
 * [Linkki sovellukseeni](http://ollisami.users.cs.helsinki.fi/tietokanta_ht/)
 * [Linkki dokumentaatiooni](https://github.com/ollisami/Tsoha-Bootstrap/blob/master/doc/dokumentaatio.pdf)
 
+Bootstrap:n dokumentaatiot:
+* [typography](http://getbootstrap.com/css/#type) - tekstin asettelu ja tyylittely 
+* [tables](http://getbootstrap.com/css/#tables) - taulukot 
+* [forms](http://getbootstrap.com/css/#forms) - lomakkeet
+* [buttons](http://getbootstrap.com/css/#buttons) - painikkeet
+
 ## Työn aihe
 
 # Blinder
