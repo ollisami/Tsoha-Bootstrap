@@ -6,10 +6,10 @@ Yleisiä linkkejä:
 * [Linkki dokumentaatiooni](https://github.com/ollisami/Tsoha-Bootstrap/blob/master/doc/dokumentaatio.pdf)
 
 Bootstrap:n dokumentaatiot:
-* [typography] - tekstin asettelu ja tyylittely (http://getbootstrap.com/css/#type)
-* [tables] - taulukot (http://getbootstrap.com/css/#tables)
-* [forms] - lomakkeet(http://getbootstrap.com/css/#forms)
-* [buttons] - painikkeet(http://getbootstrap.com/css/#buttons)
+* [typography](http://getbootstrap.com/css/#type) - tekstin asettelu ja tyylittely 
+* [tables](http://getbootstrap.com/css/#tables) - taulukot 
+* [forms](http://getbootstrap.com/css/#forms) - lomakkeet
+* [buttons](http://getbootstrap.com/css/#buttons) - painikkeet
 
 ## Työn aihe
 
