@@ -22,7 +22,7 @@
   });
 
       // Pelin lisääminen tietokantaan
-  $routes->post('/account', function(){
+  $routes->post('/account/store', function(){
       accountController::store();
   });
 

@@ -64,11 +64,13 @@ class account extends BaseModel{
 
     public function save(){
     // Lisätään RETURNING id tietokantakyselymme loppuun, niin saamme lisätyn rivin id-sarakkeen arvon
-    $query = DB::connection()->prepare('INSERT INTO Account (username,password,name,sex,age,location,description,intrestedin,minAge,maxAge) VALUES (:username,:password,:name,:sex,:age,:location,:description,:intrestedin,:minage,:maxage) RETURNING id';
+    $query = DB::connection()->prepare('INSERT INTO Account (username,password,name,sex,age,location,description,intrestedin,minAge,maxAge) VALUES (:username,:password,:name,:sex,:age,:location,:description,:intrestedin,:minage,:maxage) RETURNING id');
     // Muistathan, että olion attribuuttiin pääse syntaksilla $this->attribuutin_nimi
     $query->execute(array('username' => $this->username, 'password' => $this->password, 'name' => $this->name, 'age' => $this->age, 'location' => $this->location, 'description' => $this->description, 'instrestedin' => $this->intrestedIn, 'minage' => $this->minAge, 'maxage' => $this->maxAge));
     // Haetaan kyselyn tuottama rivi, joka sisältää lisätyn rivin id-sarakkeen arvon
     $row = $query->fetch();
+    Kint::trace();
+    Kint::dump($row);
     // Asetetaan lisätyn rivin id-sarakkeen arvo oliomme id-attribuutin arvoksi
     $this->id = $row['id'];
   }
