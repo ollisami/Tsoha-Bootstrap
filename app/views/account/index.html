@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+
+  <h1>Lista käyttäjistä:</h1>
+
+  <p>
+    <a href="{{base_path}}/account/new" class="btn btn-success">Lisää käyttäjä</a>
+  </p>
+
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>username</th>
+        <th>password</th>
+        <th>name</th>
+        <th>sex</th>
+        <th>age</th>
+        <th>location</th>
+        <th>description</th>
+        <th>intrestedIn</th>
+        <th>minAge</th>
+        <th>maxAge</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for account in accounts %}
+        <tr>
+          <td><a href="{{base_path}}/accounts/{{account.id}}">{{account.username}}</td>
+          <td>{{account.password}}</td>
+          <td>{{account.name}}</td>
+          <td>{{account.sex}}</td>
+          <td>{{account.age}}</td>
+          <td>{{account.location}}</td>
+          <td>{{account.description}}</td>
+          <td>{{account.intrestedIn}}</td>
+          <td>{{account.minAge}}</td>
+          <td>{{account.maxAge}}</td>
+          <td>
+            <!--
+              {% if game.played %}
+                <label class="label label-success">pelattu
+              {% else %}
+                <label class="label label-danger">kesken
+              {% endif %} -->
+          </td>
+          <td><a class="btn btn-default btn-sm" href="{{base_path}}/accounts/{{account.id}}/edit">Muokkaa</a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

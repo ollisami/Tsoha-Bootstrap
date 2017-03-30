@@ -13,7 +13,7 @@ CREATE TABLE Account(
   maxAge INTEGER
 );
 
-CREATE TABLE Like(
+CREATE TABLE Vote(
   account_id INTEGER REFERENCES Account(id),
   liked_account_id INTEGER REFERENCES Account(id),
   status INTEGER
@@ -32,12 +32,12 @@ CREATE TABLE Match(
 );
 
 
-CREATE TABLE Message(,
+CREATE TABLE Message(
   conversation_id INTEGER REFERENCES Conversation(id),
   content varchar(1000) NOT NULL,
   time DATE
 );
 
-CREATE TABLE Hashtag(,
+CREATE TABLE Hashtag(
    name varchar(100) NOT NULL
 );

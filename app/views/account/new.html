@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>Lisää peli kirjastoosi</h1>
+
+  <form method="post" action="{{base_path}}/account">
+    <div class="form-group">
+      <label>username</label>
+      <input name="username" class="form-control" type="text">
+    </div>
+
+    <div class="form-group">
+      <label>password</label>
+      <input name="password" class="form-control" type="text">
+    </div>
+
+    <div class="form-group">
+      <label>name</label>
+      <input name="name" class="form-control" type="text">
+    </div>
+
+    <div class="form-group">
+      <label>sex</label>
+      <textarea name="sex" class="form-control"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>age</label>
+      <textarea name="age" class="form-control"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>location</label>
+      <textarea name="location" class="form-control"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>description</label>
+      <textarea name="description" class="form-control"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>intrested in</label>
+      <textarea name="intrestedin" class="form-control"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>min age</label>
+      <textarea name="minage" class="form-control"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>max age</label>
+      <textarea name="maxage" class="form-control"></textarea>
+    </div>
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Lisää</button>
+    </div>
+  </form>
+{% endblock %}

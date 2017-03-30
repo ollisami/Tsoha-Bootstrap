@@ -9,7 +9,12 @@
     }
 
     public static function sandbox(){
-      View::make('helloworld.html');
+      //View::make('helloworld.html');
+      $test = account::find(1);
+      $allAccounts = account::all();
+    // Kint-luokan dump-metodi tulostaa muuttujan arvon
+      Kint::dump($test);
+      Kint::dump($allAccounts);
     }
 
     public static function frontpage(){
