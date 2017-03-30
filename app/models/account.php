@@ -12,9 +12,8 @@ class account extends BaseModel{
     $query = DB::connection()->prepare('SELECT * FROM account WHERE id = :id LIMIT 1');
     $query->execute(array('id' => $id));
     $row = $query->fetch();
-
     if($row){
-      $account = new Account(array(
+      $account[] = new account(array(
         'id' => $row['id'],
         'username' => $row['username'],
         'password' => $row['password'],
@@ -27,9 +26,8 @@ class account extends BaseModel{
         'minAge' => $row['minage'],
         'maxAge' => $row['maxage'],
       ));
-      return $account;
     }
-    return null;
+    return $account;
   }
 
    public static function all(){
@@ -66,7 +64,7 @@ class account extends BaseModel{
     // Lisätään RETURNING id tietokantakyselymme loppuun, niin saamme lisätyn rivin id-sarakkeen arvon
     $query = DB::connection()->prepare('INSERT INTO Account (username,password,name,sex,age,location,description,intrestedin,minAge,maxAge) VALUES (:username,:password,:name,:sex,:age,:location,:description,:intrestedin,:minage,:maxage) RETURNING id');
     // Muistathan, että olion attribuuttiin pääse syntaksilla $this->attribuutin_nimi
-    $query->execute(array('username' => $this->username, 'password' => $this->password, 'name' => $this->name, 'age' => $this->age, 'location' => $this->location, 'description' => $this->description, 'instrestedin' => $this->intrestedIn, 'minage' => $this->minAge, 'maxage' => $this->maxAge));
+    $query->execute(array('username' => $this->username, 'password' => $this->password, 'name' => $this->name,'sex' => $this->sex, 'age' => $this->age, 'location' => $this->location, 'description' => $this->description, 'intrestedin' => $this->intrestedIn, 'minage' => $this->minAge, 'maxage' => $this->maxAge));
     // Haetaan kyselyn tuottama rivi, joka sisältää lisätyn rivin id-sarakkeen arvon
     $row = $query->fetch();
     Kint::trace();

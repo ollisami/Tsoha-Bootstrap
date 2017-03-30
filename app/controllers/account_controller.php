@@ -10,9 +10,12 @@ class accountController extends BaseController{
 
   	public static function show($id){
     	//$accounts = account::find(1);
-    	$accounts = account::find(1);
+
+    	$accounts = account::find($id);
+      Kint::dump($accounts);
+      View::make('account/index.html', array('accounts' => $accounts));
     // Renderöidään views/game kansiossa sijaitseva tiedosto index.html muuttujan $games datalla
-    	View::make('account/showAccount.html', array('accounts' => $accounts));
+    	//View::make('account/showAccount.html', array('accounts' => $accounts));
   	}
 
  	public static function store(){
@@ -20,7 +23,6 @@ class accountController extends BaseController{
       $params = $_POST;
     // Alustetaan uusi Game-luokan olion käyttäjän syöttämillä arvoilla
       $account = new account(array(
-        'id' => $params['id'],
         'username' => $params['username'],
         'password' => $params['password'],
         'name' => $params['name'],
@@ -38,7 +40,7 @@ class accountController extends BaseController{
     $account->save();
 
     // Ohjataan käyttäjä lisäyksen jälkeen pelin esittelysivulle
-    Redirect::to('/account/' . $account->id, array('message' => 'Käyttäjä on lisätty kirjastoosi!'));
+    Redirect::to('/accounts/' . $account->id, array('message' => 'Käyttäjä on lisätty kirjastoosi!'));
   }
 
   	public static function create(){
