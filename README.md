@@ -3,7 +3,7 @@
 Yleisiä linkkejä:
 
 * [Linkki sovellukseeni](http://ollisami.users.cs.helsinki.fi/tietokanta_ht/)
-* [Linkki dokumentaatiooni](https://github.com/ollisami/Tsoha-Bootstrap/blob/master/doc/dokumentaatio.pdf)
+* [Linkki dokumentaatiooni](https://github.com/ollisami/Tsoha-Bootstrap/blob/master/doc/Dokumentaatio.pdf)
 * [Linkki Käsitekaavioon](https://github.com/ollisami/Tsoha-Bootstrap/blob/master/doc/k%C3%A4sitekaavio.png)
 * [Linkki tietokantakaavioon](https://github.com/ollisami/Tsoha-Bootstrap/blob/master/doc/tietokantakaavio.png)
 
