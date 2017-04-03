@@ -17,35 +17,33 @@
         <th>age</th>
         <th>location</th>
         <th>description</th>
-        <th>intrestedIn</th>
-        <th>minAge</th>
-        <th>maxAge</th>
-        <th></th>
+        <th>intrestedin</th>
+        <th>minage</th>
+        <th>maxage</th>
       </tr>
     </thead>
 
     <tbody>
       {% for account in accounts %}
         <tr>
-          <td><a href="{{base_path}}/accounts/{{account.id}}">{{account.username}}</td>
+          <td><a href="{{base_path}}/account/{{account.id}}">{{account.username}}</td>
           <td>{{account.password}}</td>
           <td>{{account.name}}</td>
           <td>{{account.sex}}</td>
           <td>{{account.age}}</td>
           <td>{{account.location}}</td>
           <td>{{account.description}}</td>
-          <td>{{account.intrestedIn}}</td>
-          <td>{{account.minAge}}</td>
-          <td>{{account.maxAge}}</td>
+          <td>{{account.intrestedin}}</td>
+          <td>{{account.minage}}</td>
+          <td>{{account.maxage}}</td>
           <td>
             <!--
-              {% if game.played %}
+              {% if account.played %}
                 <label class="label label-success">pelattu
               {% else %}
                 <label class="label label-danger">kesken
               {% endif %} -->
           </td>
-          <td><a class="btn btn-default btn-sm" href="{{base_path}}/accounts/{{account.id}}/edit">Muokkaa</a></td>
         </tr>
       {% endfor %}
     </tbody>

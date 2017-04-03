@@ -9,19 +9,17 @@
   });
 
   $routes->get('/etusivu', function() {
-  	HelloWorldController::frontpage();
+  	accountController::frontpage();
   });
 
   $routes->get('/rekisteroidy', function() {
-  	HelloWorldController::createAccount();
+  	accountController::createAccount();
   });
 
-// Pelin lisäyslomakkeen näyttäminen
   $routes->get('/account/new', function(){
     accountController::create();
   });
 
-      // Pelin lisääminen tietokantaan
   $routes->post('/account/store', function(){
       accountController::store();
   });
@@ -30,9 +28,38 @@
     accountController::showAll();
   });
 
-  $routes->get('/accounts/:id', function($id){
+  $routes->get('/account/:id', function($id){
     accountController::show($id);
   });
+
+  $routes->get('/account/:id/edit', function($id){
+    accountController::edit($id);
+  });
+  
+  $routes->post('/account/:id/edit', function($id){
+    accountController::update($id);
+  });
+
+  $routes->post('/account/:id/destroy', function($id){
+    accountController::destroy($id);
+  });
+
+  $routes->get('/account/:id/destroy', function($id){
+    accountController::destroy($id);
+  });
+
+
+
+
+  $routes->get('/login', function(){
+    // Kirjautumislomakkeen esittäminen
+    UserController::login();
+  });
+
+$routes->post('/login', function(){
+  // Kirjautumisen käsittely
+  UserController::handle_login();
+});
 
 
 

@@ -8,9 +8,9 @@ CREATE TABLE Account(
   age INTEGER,
   location varchar(50) NOT NULL,
   description varchar(2000) NOT NULL,
-  intrestedIn INTEGER,
-  minAge INTEGER,
-  maxAge INTEGER
+  intrestedin INTEGER,
+  minage INTEGER,
+  maxage INTEGER
 );
 
 CREATE TABLE Vote(

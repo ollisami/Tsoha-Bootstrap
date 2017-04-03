@@ -1,2 +1,2 @@
 -- Lisää INSERT INTO lauseet tähän tiedostoon
-INSERT INTO Account(username,password,name,sex,age,location,description,intrestedIn,minAge,maxAge) VALUES ('test', 'test1234', 'testi',1,20, 'Helsinki', 'Testitestitesti', 1, 18,25)
+INSERT INTO Account(username,password,name,sex,age,location,description,intrestedin,minage,maxage) VALUES ('test', 'test1234', 'testi',1,20, 'Helsinki', 'Testitestitesti', 1, 18,25)

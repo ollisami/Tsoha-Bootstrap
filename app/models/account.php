@@ -2,14 +2,15 @@
 
 class account extends BaseModel{
 
-  public $id ,$username, $password, $name, $sex, $age, $location, $description, $intrestedIn, $minAge, $maxAge;
+  public $id ,$username, $password, $name, $sex, $age, $location, $description, $intrestedin, $minage, $maxage, $validators;
 
   public function __construct($attributes){
     parent::__construct($attributes);
+    $this->validators = array('validate_username', 'validate_password', 'validate_name', 'validate_location', 'validate_description');
   }
 
   public static function find($id){
-    $query = DB::connection()->prepare('SELECT * FROM account WHERE id = :id LIMIT 1');
+    $query = DB::connection()->prepare('SELECT * FROM Account WHERE id = :id LIMIT 1');
     $query->execute(array('id' => $id));
     $row = $query->fetch();
     if($row){
@@ -22,9 +23,9 @@ class account extends BaseModel{
         'age' => $row['age'],
         'location' => $row['location'],
         'description' => $row['description'],
-        'intrestedIn' => $row['intrestedin'],
-        'minAge' => $row['minage'],
-        'maxAge' => $row['maxage'],
+        'intrestedin' => $row['intrestedin'],
+        'minage' => $row['minage'],
+        'maxage' => $row['maxage'],
       ));
     }
     return $account;
@@ -51,25 +52,95 @@ class account extends BaseModel{
         'age' => $row['age'],
         'location' => $row['location'],
         'description' => $row['description'],
-        'intrestedIn' => $row['intrestedin'],
-        'minAge' => $row['minage'],
-        'maxAge' => $row['maxage'],
+        'intrestedin' => $row['intrestedin'],
+        'minage' => $row['minage'],
+        'maxage' => $row['maxage'],
       ));
     }
 
     return $accounts;
   }
 
-    public function save(){
+  public function save(){
     // Lisätään RETURNING id tietokantakyselymme loppuun, niin saamme lisätyn rivin id-sarakkeen arvon
-    $query = DB::connection()->prepare('INSERT INTO Account (username,password,name,sex,age,location,description,intrestedin,minAge,maxAge) VALUES (:username,:password,:name,:sex,:age,:location,:description,:intrestedin,:minage,:maxage) RETURNING id');
+    $query = DB::connection()->prepare('INSERT INTO Account (username,password,name,sex,age,location,description,intrestedin,minage,maxage) VALUES (:username,:password,:name,:sex,:age,:location,:description,:intrestedin,:minage,:maxage) RETURNING id');
     // Muistathan, että olion attribuuttiin pääse syntaksilla $this->attribuutin_nimi
-    $query->execute(array('username' => $this->username, 'password' => $this->password, 'name' => $this->name,'sex' => $this->sex, 'age' => $this->age, 'location' => $this->location, 'description' => $this->description, 'intrestedin' => $this->intrestedIn, 'minage' => $this->minAge, 'maxage' => $this->maxAge));
+    $query->execute(array('username' => $this->username, 'password' => $this->password, 'name' => $this->name,'sex' => $this->sex, 'age' => $this->age, 'location' => $this->location, 'description' => $this->description, 'intrestedin' => $this->intrestedin, 'minage' => $this->minage, 'maxage' => $this->maxage));
     // Haetaan kyselyn tuottama rivi, joka sisältää lisätyn rivin id-sarakkeen arvon
     $row = $query->fetch();
-    Kint::trace();
-    Kint::dump($row);
+    //Kint::trace();
+    //Kint::dump($row);
     // Asetetaan lisätyn rivin id-sarakkeen arvo oliomme id-attribuutin arvoksi
     $this->id = $row['id'];
+  }
+
+  public function update(){
+    $query = DB::connection()->prepare('UPDATE Account SET username = :username, password = :password, name = :name, sex = :sex, age = :age, location = :location, description = :description, intrestedin = :intrestedin, minage = :minage, maxage = :maxage WHERE id = :id');
+    $query->execute(array(
+    'id' => $this->id,
+     'username' => $this->username, 
+     'password' => $this->password, 
+     'name' => $this->name,
+     'sex' => $this->sex, 
+     'age' => $this->age, 
+     'location' => $this->location, 
+     'description' => $this->description, 
+     'intrestedin' => $this->intrestedin, 
+     'minage' => $this->minage, 
+     'maxage' => $this->maxage));
+    
+  }
+
+
+  public function destroy(){
+    $query = DB::connection()->prepare('DELETE FROM Account WHERE id = :id');
+    $t = $this->id;
+    $query->execute(array('id' => $t));
+  }
+
+
+  public function errors(){
+    $errors = array();
+
+    foreach ($this->validators as $validator) {
+      $errors = array_merge($errors, $this->{$validator}());
+    }
+
+    //Numbers
+    $errors = array_merge($errors, parent::validate_number("Sex",$this->sex, 0, 1));
+    $errors = array_merge($errors, parent::validate_number("Age",$this->age, 18, 140));
+    $errors = array_merge($errors, parent::validate_number("intrested in",$this->intrestedin, 1, 3));
+    $errors = array_merge($errors, parent::validate_number("min age",$this->minage, 18, 140));
+    $errors = array_merge($errors, parent::validate_number("max age",$this->maxage, 18, 140));
+
+  /*
+  if($this->name == '' || $this->name == null){
+    $errors[] = 'Nimi ei saa olla tyhjä!';
+  }
+  if(strlen($this->name) < 3){
+    $errors[] = 'Nimen pituuden tulee olla vähintään kolme merkkiä!';
+  } */
+
+  return $errors;
+}
+
+  public function validate_username () {
+    return parent::validate_string_length("Username",$this->username, 4);
+  }
+
+    public function validate_password () {
+    return parent::validate_string_length("Password",$this->password, 4);
+  }
+
+    public function validate_name () {
+    return parent::validate_string_length("Name",$this->name, 4);
+  }
+
+    public function validate_location () {
+    return parent::validate_string_length("Location",$this->location, 4);
+  }
+
+    public function validate_description () {
+    return parent::validate_string_length("Description",$this->description, 4);
   }
 }
