@@ -1,7 +1,7 @@
 <?php
 
   $routes->get('/', function() {
-    HelloWorldController::index();
+    accountController::frontpage();
   });
 
   $routes->get('/hiekkalaatikko', function() {
@@ -35,7 +35,7 @@
   $routes->get('/account/:id/edit', function($id){
     accountController::edit($id);
   });
-  
+
   $routes->post('/account/:id/edit', function($id){
     accountController::update($id);
   });
@@ -51,7 +51,7 @@
 
 
 
-  $routes->get('/login', function(){
+$routes->get('/login', function(){
     // Kirjautumislomakkeen esittäminen
     UserController::login();
   });
