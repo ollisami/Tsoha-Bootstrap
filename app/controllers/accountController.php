@@ -17,8 +17,14 @@ class accountController extends BaseController{
 
   public static function show($id){
     	$account = account::find($id);
-      //Kint::dump($accounts);
-      View::make('account/showAccount.html', array('accounts' => $account));
+      if(count($account) == 0) {
+        Redirect::to('/', array('error' => 'Käyttäjää ei löytynyt!'));
+      } else {
+        //$offeredAccounts = account::getOfferedAccounts($account[0]->minage, $account[0]->maxage, $account[0]->intrestedin);
+        $offeredaccounts = account::all();
+        //Kint::dump($offeredaccounts);
+        View::make('account/showAccount.html', array('accounts' => $account, 'offeredaccounts' => $offeredaccounts));
+    }
   }
 
  	public static function store(){
@@ -46,7 +52,7 @@ class accountController extends BaseController{
     if(count($errors) == 0){
       // Peli on validi, hyvä homma!
       $account->save();
-      Redirect::to('/account/' . $account->id, array('message' => 'Käyttäjä on lisätty kirjastoosi!'));
+      Redirect::to('/', array('message' => 'Käyttäjä on lisätty tietokantaan!'));
     }else{
       // Pelissä oli jotain vikaa :(
       View::make('/account/new.html', array('errors' => $errors, 'attributes' => $attributes));
@@ -60,7 +66,21 @@ class accountController extends BaseController{
 
   public static function edit($id){
     $account = account::find($id);
-    View::make('account/edit.html', array('attributes' => $account));
+     $attributes = array();
+     if($account) {
+        $attributes = array(
+          'username' => $account[0]->username,
+          'name' => $account[0]->name,
+          'sex' => $account[0]->sex,
+          'age' => $account[0]->age,
+          'location' => $account[0]->location,
+          'description' => $account[0]->description,
+          'intrestedin' => $account[0]->intrestedin,
+          'minage' => $account[0]->minage,
+          'maxage' => $account[0]->maxage,
+        );
+      }
+    View::make('account/edit.html', array('attributes' => $attributes));
   }
 
   public static function update($id){
@@ -86,6 +106,7 @@ class accountController extends BaseController{
     $errors = $account->errors();
 
     if(count($errors) > 0){
+      $message = 'Error: ';
       View::make('account/edit.html', array('errors' => $errors, 'attributes' => $account));
     }else{
       // Kutsutaan alustetun olion update-metodia, joka päivittää pelin tiedot tietokannassa

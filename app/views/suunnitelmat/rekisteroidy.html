@@ -1,71 +1,76 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="front-div">
-  <h2>Syötä tiedot:</h2>
+  <div class="front-div">
+    <h1>Rekisteröidy</h1>
 
-  <form>
-    <div class="form-group">
-      <label>Käyttäjänimi</label>
-      <input class="form-control" type="text">
-    </div>
-    <div class="form-group">
-      <label>Salasana</label>
-      <input class="form-control" type="password">
-    </div>
+    <form method="post">
+      <div class="form-group">
+        <label>username</label>
+        <input name="username" class="form-control" value="{{attributes.username}}" type="text">
+      </div>
 
-    <div class="form-group">
-      <label>Nimi</label>
-      <input class="form-control" type="text">
-    </div>
-    <div class="checkbox">
-      <label>
-        <input type="checkbox">
-        Mies
-      </label>
-      <label>
-        <input type="checkbox">
-        Nainen
-      </label>
-    </div>
-    <div class="form-group">
-      <label>Syntymäaika</label>
-      <input class="form-control" type="text">
-    </div>
-    <div class="form-group">
-      <label>Kaupunki</label>
-      <input class="form-control" type="text">
-    </div>
-    <div class="form-group">
-      <label>Kuvaus</label>
-      <textarea class="form-control"> </textarea>
-    </div>
+      <div class="form-group">
+        <label>password</label>
+        <input name="password" class="form-control" type="password">
+      </div>
 
-    <div class="checkbox">
-      <label>Olen kiinnostunut</label>
-      <label>
-        <input type="checkbox">
-        Naisista
-      </label>
-      <label>
-        <input type="checkbox">
-        Miehistä
-      </label>
-    </div>
-    <div class="form-group">
-      <label>Joiden ikä on väliltä</label>
-      <input class="form-control" type="text">
-      <label> ja </label>
-      <input class="form-control" type="text">
-    </div>
-    <div class="form-group">
-      <label>Kiinnostavimmat hastagisi</label>
-      <textarea class="form-control"> </textarea>
-    </div>
+      <div class="form-group">
+        <label>name</label>
+        <input name="name" class="form-control" value="{{attributes.name}}" type="text">
+      </div>
 
-    <div class="form-group">
-      <button type="submit" class="btn btn-primary">Tallenna</button>
-    </div>
-  </form>
-</div>
+      <div class="form-group">
+        <label>Sex</label>
+        <select class="form-control" value="{{attributes.sex}}" name="sex">
+            <option value="1">Nainen</option>
+            <option value="2">Mies</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>age</label>
+        <input name="age" class="form-control" value="{{attributes.age}}" type="text">
+      </div>
+
+      <div class="form-group">
+        <label>location</label>
+        <input name="location" class="form-control" value="{{attributes.location}}" type="text">
+      </div>
+
+      <div class="form-group">
+        <label>description</label>
+        <textarea name="description" class="form-control" value="{{attributes.description}}"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>intrested in</label>
+        <select class="form-control" value="{{attributes.intrestedin}}" name="intrestedin">
+            <option value="1">Nainen</option>
+            <option value="2">Mies</option>
+            <option value="3">Molemmat</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>min age</label>
+        <input name="minage" class="form-control" value="{{attributes.minage}}" type="text">
+      </div>
+
+      <div class="form-group">
+        <label>max age</label>
+        <input name="maxage" class="form-control" value="{{attributes.maxage}}" type="text">
+      </div>
+
+      <div class="form-group">
+        <label for="exampleInputFile">File input</label>
+        <input type="file" id="exampleInputFile">
+        <p class="help-block">Example block-level help text here.</p>
+      </div>
+
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">Rekisteröidy!</button>
+      </div>
+    </form>
+  </div>
 {% endblock %}

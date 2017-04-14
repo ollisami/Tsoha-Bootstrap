@@ -18,10 +18,10 @@
   public function validate_string_length($paramName,$string, $length){
     $errors = array();
     if($string == '' || $string == null){
-      $errors[] = $paramName. ' ERROR: Merkkijono ei saa olla tyhjä!';
+      $errors[] = ' ERROR: ' .$paramName. ' Merkkijono ei saa olla tyhjä!';
     }
     if(strlen($string) < $length){
-      $errors[] = $paramName. ' ERROR: Merkkijono pituus ei riitä!';
+      $errors[] = ' ERROR: ' . $paramName. ' Merkkijono pituus ei riitä!';
     }
 
     return $errors;
@@ -30,10 +30,10 @@
     public function validate_number($paramName, $numb, $min, $max){
     $errors = array();
     if($numb == null || !is_numeric($numb)) {
-      $errors[] = $paramName. ' ERROR: ' + 'Luku ei ole numero!';
+      $errors[] = ' ERROR: ' . $paramName. 'Luku ei ole numero!';
     }
     if($numb < $min || $numb > $max){
-      $errors[] = $paramName. ' ERROR: ' + 'Luku ei kelpaa!';
+      $errors[] = ' ERROR: ' . $paramName . 'Luku ei kelpaa!';
     }
 
     return $errors;

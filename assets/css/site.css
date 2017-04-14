@@ -10,16 +10,6 @@
 }
 
 body {
-  /*
-    background: #4c4c4c;
-	background: -moz-linear-gradient(top, #4c4c4c 0%, #595959 12%, #666666 25%, #474747 39%, #333333 55%, #333333 60%, #333333 76%, #1c1c1c 91%, #333333 100%);
-	background: -webkit-linear-gradient(top, #4c4c4c 0%,#595959 12%,#666666 25%,#474747 39%,#333333 55%,#333333 60%,#333333 76%,#1c1c1c 91%,#333333 100%);
-	background: linear-gradient(to bottom, #4c4c4c 0%,#595959 12%,#666666 25%,#474747 39%,#333333 55%,#333333 60%,#333333 76%,#1c1c1c 91%,#333333 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4c4c4c', endColorstr='#333333',GradientType=0 );
-    height: 100%;
-    margin: 0;
-    background-repeat: no-repeat;
-    background-attachment: fixed; */
 
     background-image: url("/tietokanta_ht/assets/Images/bg_pattern.jpg");
     background-size: 300px 300px;
@@ -65,4 +55,56 @@ body {
 
 .top-margin {
   margin: 150px 0 0 0;
+}
+
+.popup-bg {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.account-popup {
+  width: 60%;
+  height: 80%;
+  margin: 5% auto;
+  background-color: rgb(255,255,255);
+  border: 3px solid #888;
+  overflow: hidden;
+
+}
+
+.account-popup-content {
+  width: 60%;
+  height: 80%;
+  background-color: rgb(255,255,255);
+  margin-top: 5%;
+  margin-bottom: 20%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.account-popup-description {
+    width: 100%;
+    height: 80%;
+    overflow: auto;
+    border: 3px solid #888;
+}
+
+.account-popup-buttons {
+  width: 100%;
+  margin: 5% auto;
+}
+
+.close-popup {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
 }

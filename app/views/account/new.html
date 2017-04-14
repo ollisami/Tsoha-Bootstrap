@@ -2,9 +2,9 @@
 {% block content %}
 
   <div class="front-div">
-    <h1>Lisää käyttäjä</h1>
+    <h1>Rekisteröidy</h1>
 
-    <form method="post" action="{{base_path}}/account/store">
+  <form method="post" action="{{base_path}}/account/store">
       <div class="form-group">
         <label>username</label>
         <input name="username" class="form-control" value="{{attributes.username}}" type="text">
@@ -21,8 +21,11 @@
       </div>
 
       <div class="form-group">
-        <label>sex</label>
-        <input name="sex" class="form-control" value="{{attributes.sex}}" type="text">
+        <label>Sex</label>
+        <select class="form-control" value="{{attributes.sex}}" name="sex">
+            <option value="1">Nainen</option>
+            <option value="2">Mies</option>
+        </select>
       </div>
 
       <div class="form-group">
@@ -42,7 +45,11 @@
 
       <div class="form-group">
         <label>intrested in</label>
-        <input name="intrestedin" class="form-control" type="text">
+        <select class="form-control" value="{{attributes.intrestedin}}" name="intrestedin">
+            <option value="1">Nainen</option>
+            <option value="2">Mies</option>
+            <option value="3">Molemmat</option>
+        </select>
       </div>
 
       <div class="form-group">
@@ -62,7 +69,7 @@
       </div>
 
       <div class="form-group">
-        <button type="submit" class="btn btn-primary">Lisää</button>
+        <button type="submit" class="btn btn-primary">Rekisteröidy!</button>
       </div>
     </form>
   </div>

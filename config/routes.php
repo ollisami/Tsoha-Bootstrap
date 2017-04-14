@@ -1,5 +1,9 @@
 <?php
 
+  function check_logged_in(){
+    BaseController::check_logged_in();
+  }
+
   $routes->get('/', function() {
     accountController::frontpage();
   });
@@ -13,7 +17,11 @@
   });
 
   $routes->get('/rekisteroidy', function() {
-  	accountController::createAccount();
+    accountController::create();
+  });
+
+  $routes->post('/rekisteroidy', function() {
+    accountController::create();
   });
 
   $routes->get('/account/new', function(){
@@ -24,42 +32,45 @@
       accountController::store();
   });
 
-  $routes->get('/accounts', function() {
+  $routes->get('/accounts', 'check_logged_in', function() {
     accountController::showAll();
   });
 
-  $routes->get('/account/:id', function($id){
+  $routes->get('/account/:id', 'check_logged_in', function($id){
     accountController::show($id);
   });
 
-  $routes->get('/account/:id/edit', function($id){
+  $routes->get('/account/:id/edit', 'check_logged_in', function($id){
     accountController::edit($id);
   });
 
-  $routes->post('/account/:id/edit', function($id){
+  $routes->post('/account/:id/edit', 'check_logged_in', function($id){
     accountController::update($id);
   });
 
-  $routes->post('/account/:id/destroy', function($id){
+  $routes->post('/account/:id/destroy', 'check_logged_in', function($id){
     accountController::destroy($id);
   });
 
-  $routes->get('/account/:id/destroy', function($id){
+  $routes->get('/account/:id/destroy', 'check_logged_in', function($id){
     accountController::destroy($id);
   });
 
 
-
-
+//-----------------LOGIN--------------------------------
 $routes->get('/login', function(){
     // Kirjautumislomakkeen esittäminen
-    UserController::login();
+    loginController::login();
   });
 
 $routes->post('/login', function(){
   // Kirjautumisen käsittely
-  UserController::handle_login();
+  loginController::handle_login();
 });
 
+$routes->post('/logout', function(){
+    loginController::logout();
+});
+//---------------------/login--------------------------
 
 

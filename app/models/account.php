@@ -13,6 +13,7 @@ class account extends BaseModel{
     $query = DB::connection()->prepare('SELECT * FROM Account WHERE id = :id LIMIT 1');
     $query->execute(array('id' => $id));
     $row = $query->fetch();
+    $account = array();
     if($row){
       $account[] = new account(array(
         'id' => $row['id'],
@@ -29,6 +30,41 @@ class account extends BaseModel{
       ));
     }
     return $account;
+  }
+
+  public static function getOfferedAccounts($maxage, $minage, $intrestedin) {
+    /*
+    $query = DB::connection()->prepare('SELECT * FROM account WHERE age <= :maxage AND age >= :minage');
+
+    if($intrestedin != 3) {
+      $query = DB::connection()->prepare('SELECT * FROM account WHERE age <= :maxage AND age >= :minage AND sex = :intrestedin');
+      $query->execute(array('maxage'=>$maxage, 'minage'=>$minage, 'intrestedin'=>$intrestedin));
+    }else {
+      $query->execute(array('maxage'=>$maxage, 'minage'=>$minage));
+    }
+    */
+    $query = DB::connection()->prepare('SELECT * FROM account');
+    $query->execute();
+    
+    $rows = $query->fetchAll();
+    $accounts = array();
+    foreach($rows as $row){
+      $accounts[] = new account(array(
+        'id' => $row['id'],
+        'username' => $row['username'],
+        'password' => $row['password'],
+        'name' => $row['name'],
+        'sex' => $row['sex'],
+        'age' => $row['age'],
+        'location' => $row['location'],
+        'description' => $row['description'],
+        'intrestedin' => $row['intrestedin'],
+        'minage' => $row['minage'],
+        'maxage' => $row['maxage'],
+      ));
+    }
+
+    return $accounts;
   }
 
    public static function all(){
@@ -98,6 +134,29 @@ class account extends BaseModel{
     $query->execute(array('id' => $t));
   }
 
+  public function authenticate($username, $password) {
+    $query = DB::connection()->prepare('SELECT * FROM Account WHERE username = :username AND password = :password LIMIT 1');
+    $query->execute(array('username' => $username, 'password' => $password));
+    $row = $query->fetch();
+    $account = array();
+    if($row){
+        $account[] = new account(array(
+          'id' => $row['id'],
+          'username' => $row['username'],
+          'password' => $row['password'],
+          'name' => $row['name'],
+          'sex' => $row['sex'],
+          'age' => $row['age'],
+          'location' => $row['location'],
+          'description' => $row['description'],
+          'intrestedin' => $row['intrestedin'],
+          'minage' => $row['minage'],
+          'maxage' => $row['maxage'],
+      ));
+    }
+    return $account;
+  }
+
 
   public function errors(){
     $errors = array();
@@ -107,19 +166,11 @@ class account extends BaseModel{
     }
 
     //Numbers
-    $errors = array_merge($errors, parent::validate_number("Sex",$this->sex, 0, 1));
+    $errors = array_merge($errors, parent::validate_number("Sex",$this->sex, 1, 2));
     $errors = array_merge($errors, parent::validate_number("Age",$this->age, 18, 140));
     $errors = array_merge($errors, parent::validate_number("intrested in",$this->intrestedin, 1, 3));
     $errors = array_merge($errors, parent::validate_number("min age",$this->minage, 18, 140));
     $errors = array_merge($errors, parent::validate_number("max age",$this->maxage, 18, 140));
-
-  /*
-  if($this->name == '' || $this->name == null){
-    $errors[] = 'Nimi ei saa olla tyhjä!';
-  }
-  if(strlen($this->name) < 3){
-    $errors[] = 'Nimen pituuden tulee olla vähintään kolme merkkiä!';
-  } */
 
   return $errors;
 }
