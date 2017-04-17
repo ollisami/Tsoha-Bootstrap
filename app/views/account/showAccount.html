@@ -5,7 +5,7 @@
   <h1>Käyttäjä:</h1>
             
   <p>
-    <a href="{{base_path}}/accounts" class="btn btn-success">Näytä käyttäjä</a>
+    <a href="{{base_path}}/accounts" class="btn btn-success">Näytä kaikki käyttäjät</a>
   </p>
 
   <table class="table table-striped table-bordered">
@@ -53,17 +53,20 @@
       {% endfor %}
     </tbody>
   </table>
+    <button type="button" class="btn btn-primary" id="openFindPopup">etsi pareja</button>
+    <button type="button" class="btn btn-primary" id="openBrowsePopup">selaa pareja</button>
 
-  <button type="button" class="btn btn-primary" id="openPopup">selaa käyttäjiä</button>
 
-  <div class="popup-bg" id="userPopup">
+<!-- FIND USER -->
+  <div class="popup-bg" id="findUserPopup">
     <div class="account-popup">
-       <span class="close">&times;</span>
+       <span class ="close" id="close_find">&times;</span>
 
        {% for account in offeredaccounts %}
         <div class="account-popup-content">
           <div class="account-popup-description">
             <p> {{account.description}}</p>
+            <p> {{account.name}} , {{account.location}}</p>
           </div>
           <div class="account-popup-buttons">
             <button type="button" class="btn btn-primary" id="like">like</button>
@@ -77,14 +80,50 @@
             <p> Out of users ;((</p>
           </div>
         </div>
+    </div>
+  </div>
+<!-- /FIND USER -->
 
+<!-- SHOW MATCHES -->
+  <div class="popup-bg-pairs" id="showMatchPopup">
+    <div class="account-popup-pairs">
+       <span class ="close" id="close_show">&times;</span>
+
+       {% for pair in pairs %}
+        <div class="account-popup-content">
+          <div class="account-popup-description">
+            <p> {{pair.description}}</p>
+            <p> {{pair.name}} , {{pair.location}}</p>
+          </div>
+          <div class="account-popup-buttons">
+            <a class="btn btn-primary" href="{{base_path}}/account/{{accounts[0].id}}/keskustelu/{{pair.id}}">Keskustele</a>
+          </div>
+        </div>
+       {% endfor %}
+
+        <div class="account-popup-content">
+          <div class="account-popup-description">
+            <p> End of pairs.</p>
+          </div>
+        </div>
     </div>
   </div>
 
-  <script>
-  var popup = document.getElementById('userPopup');
-  var btn = document.getElementById("openPopup");
-  var span = document.getElementsByClassName("close")[0]; 
+    <script>
+  var popup = document.getElementById('findUserPopup');
+  var btn = document.getElementById("openFindPopup");
+  var span = document.getElementById("close_find");
+
+  var matchPopup = document.getElementById('showMatchPopup');
+  var matchBtn = document.getElementById("openBrowsePopup");
+  var matchSpan = document.getElementById("close_show");
+
+  matchBtn.onclick = function() {
+      matchPopup.style.display = "block";
+  }
+  matchSpan.onclick = function() {
+      matchPopup.style.display = "none";
+  }
   btn.onclick = function() {
       popup.style.display = "block";
   }
@@ -95,13 +134,16 @@
       if (event.target == popup) {
           popup.style.display = "none";
       }
+      if (event.target == matchPopup) {
+          matchPopup.style.display = "none";
+      }
       if(event.target.id == 'like' || event.target.id == 'dislike') {
         var parent = event.target.parentElement.parentElement;
-        console.log(parent);
         /* Do some crazy shit */
         parent.parentElement.removeChild(parent);
       }
   }
 </script>
+<!-- /SHOW MATCHES -->
 
 {% endblock %}

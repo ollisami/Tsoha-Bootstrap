@@ -1,0 +1,54 @@
+<?php
+
+class vote extends BaseModel {
+
+  public $account_id ,$liked_account_id, $status;
+
+  public function __construct($attributes){
+    parent::__construct($attributes);
+  }
+
+  public static function getPairs($id) {
+    $query = DB::connection()->prepare('SELECT * FROM vote WHERE account_id = :id and status = 2');
+    $query->execute(array('id'=>$id));
+   	$rows = $query->fetchAll();
+    $givenLikes = array();
+    foreach($rows as $row){
+      $givenLikes[] = new vote(array(
+        'account_id' => $row['account_id'],
+        'liked_account_id' => $row['liked_account_id'],
+        'status' => $row['status']
+      ));
+    }
+    //Kint::dump($givenLikes);
+
+    $query = DB::connection()->prepare('SELECT * FROM vote WHERE liked_account_id = :id and status = 2');
+    $query->execute(array('id'=>$id));
+   	$rows = $query->fetchAll();
+    $resivedLikes = array();
+    foreach($rows as $row){
+      $resivedLikes[] = new vote(array(
+        'account_id' => $row['account_id'],
+        'liked_account_id' => $row['liked_account_id'],
+        'status' => $row['status']
+      ));
+    }
+    //Kint::dump($resivedLikes);
+
+    $pairs = array();
+
+    foreach ($givenLikes as $given) {
+    	foreach ($resivedLikes as $resived) {
+    		if($given->liked_account_id == $resived->account_id) {
+    			$account = account::find($given->liked_account_id);
+    			if(count($account)> 0) {
+    				match::createPair($given->liked_account_id, $resived->liked_account_id);
+    				$pairs[] = $account[0];
+    			}
+    		}
+    	}
+    }
+    //Kint::dump($pairs);
+    return $pairs;
+  }
+}

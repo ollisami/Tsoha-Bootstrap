@@ -20,12 +20,15 @@ class accountController extends BaseController{
       if(count($account) == 0) {
         Redirect::to('/', array('error' => 'Käyttäjää ei löytynyt!'));
       } else {
-        //$offeredAccounts = account::getOfferedAccounts($account[0]->minage, $account[0]->maxage, $account[0]->intrestedin);
-        $offeredaccounts = account::all();
-        //Kint::dump($offeredaccounts);
-        View::make('account/showAccount.html', array('accounts' => $account, 'offeredaccounts' => $offeredaccounts));
+        $offeredaccounts = account::getOfferedAccounts($account[0]->minage, $account[0]->maxage, $account[0]->intrestedin);
+        $pairs = vote::getPairs($account[0]->id);
+        //$offeredaccounts = account::all();
+        //Kint::dump($pairs);
+        View::make('account/showAccount.html', array('accounts' => $account, 'offeredaccounts' => $offeredaccounts, 'pairs' => $pairs));
     }
   }
+
+
 
  	public static function store(){
     // POST-pyynnön muuttujat sijaitsevat $_POST nimisessä assosiaatiolistassa
@@ -120,5 +123,32 @@ class accountController extends BaseController{
     $account = new account(array('id' => $id));
     $account->destroy();
     Redirect::to('/accounts', array('message' => 'Käyttäjä on poistettu onnistuneesti!'));
+  }
+
+  public static function message($id, $pairId){
+    $match = match::findWithAccount($id, $pairId);
+    Redirect::to('/account/' . $id . '/conversation/' . $match[0]->conversation_id);
+  }
+
+  public static function showMessageBord($id){
+    $conversation = message::findAll($id);
+    View::make('account/conversation.html', array('conversation' => $conversation));
+  }
+
+  public static function sendMessage($id, $conversationId){
+    $params = $_POST;
+    $attributes = array(
+      'conversation_id' => $conversationId,
+      'content' => $params['content']
+      //'time' => new Date()
+    );
+
+    $message = new message($attributes);
+    $message->insert();
+    //Kint::dump($message);
+    $conversation = message::findAll($conversationId);
+    Kint::dump($conversation);
+    //Redirect::to('/account/' . $id . '/conversation/' . $conversationId, array('message' => 'Viesti lähetetty onnistuneesti!', 'conversation' => $conversation));
+    View::make('account/conversation.html', array('message' => 'Viesti lähetetty onnistuneesti!','conversation' => $conversation));
   }
 }

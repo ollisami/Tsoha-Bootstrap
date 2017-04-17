@@ -4,7 +4,10 @@
 			"config/database.php",
 			"lib",
 			"app/controllers",
-			"app/models/account.php"
+			"app/models/account.php",
+			"app/models/vote.php",
+			"app/models/match.php",
+			"app/models/message.php"
 		]
 	},
 	"require": {

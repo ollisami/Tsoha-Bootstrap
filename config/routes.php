@@ -57,6 +57,20 @@
   });
 
 
+
+  $routes->get('/account/:id/keskustelu/:pairId', 'check_logged_in', function($id, $pairId){
+    accountController::message($id, $pairId);
+  });
+
+  $routes->post('/account/:id/conversation/:conversationId', 'check_logged_in', function($id, $conversationId){
+    accountController::sendMessage($id, $conversationId);
+  });
+
+  $routes->get('/account/:id/conversation/:conversationId', 'check_logged_in', function($conversationId){
+    accountController::showMessageBord($conversationId);
+  });
+
+
 //-----------------LOGIN--------------------------------
 $routes->get('/login', function(){
     // Kirjautumislomakkeen esittäminen

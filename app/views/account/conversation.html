@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+{% import "macros/forms.html" as forms %}
+
+<div class="message-board">
+	{% for message in conversation %}
+	<div class="message">
+		<p> {{message.content}}</p>
+	</div>
+	{% endfor %}
+
+	<div class="submit-form">
+		<form method="post">
+			<textarea name="content" class="form-control"></textarea>
+			<button type="submit" class="btn btn-primary">Lähetä!</button>
+		</form>
+	</div>
+</div>
+
+{% endblock %}

@@ -10,7 +10,7 @@ class account extends BaseModel{
   }
 
   public static function find($id){
-    $query = DB::connection()->prepare('SELECT * FROM Account WHERE id = :id LIMIT 1');
+    $query = DB::connection()->prepare('SELECT * FROM account WHERE id = :id LIMIT 1');
     $query->execute(array('id' => $id));
     $row = $query->fetch();
     $account = array();
@@ -32,8 +32,7 @@ class account extends BaseModel{
     return $account;
   }
 
-  public static function getOfferedAccounts($maxage, $minage, $intrestedin) {
-    /*
+  public static function getOfferedAccounts($minage, $maxage, $intrestedin) {
     $query = DB::connection()->prepare('SELECT * FROM account WHERE age <= :maxage AND age >= :minage');
 
     if($intrestedin != 3) {
@@ -42,9 +41,6 @@ class account extends BaseModel{
     }else {
       $query->execute(array('maxage'=>$maxage, 'minage'=>$minage));
     }
-    */
-    $query = DB::connection()->prepare('SELECT * FROM account');
-    $query->execute();
     
     $rows = $query->fetchAll();
     $accounts = array();
