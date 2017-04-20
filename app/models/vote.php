@@ -26,7 +26,7 @@ class vote extends BaseModel {
         'status' => $row['status']
       ));
     }
-    //Kint::dump($givenLikes);
+    ////kint::dump($givenLikes);
 
     $query = DB::connection()->prepare('SELECT * FROM vote WHERE liked_account_id = :id and status = 2');
     $query->execute(array('id'=>$id));
@@ -39,7 +39,7 @@ class vote extends BaseModel {
         'status' => $row['status']
       ));
     }
-    //Kint::dump($resivedLikes);
+    ////kint::dump($resivedLikes);
 
     $pairs = array();
 
@@ -54,7 +54,7 @@ class vote extends BaseModel {
     		}
     	}
     }
-    //Kint::dump($pairs);
+    ////kint::dump($pairs);
     return $pairs;
   }
 }

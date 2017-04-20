@@ -16,14 +16,14 @@ class match extends BaseModel {
 	    $query->execute(array('id_1' => $id_1, 'id_2' => $id_2, 'conversation' => $conversation[0]));
 	    // Haetaan kyselyn tuottama rivi, joka sisältää lisätyn rivin id-sarakkeen arvon
 	    $row = $query->fetch();
-	    //Kint::trace();
-	    Kint::dump($row);
+	    ////kint::trace();
+	    //kint::dump($row);
 	    // Asetetaan lisätyn rivin id-sarakkeen arvo oliomme id-attribuutin arvoksi
 	    $params = array();
 	    if($row){
 	    	$id = $row['id'];
 	    	$match = match::find($id);
-	    	Kint::dump($match);
+	    	//kint::dump($match);
 		}
 	}
   }

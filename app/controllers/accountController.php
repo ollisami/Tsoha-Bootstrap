@@ -26,10 +26,10 @@ class accountController extends BaseController{
         Redirect::to('/', array('error' => 'Käyttäjää ei löytynyt!'));
       } else {
         $offeredaccounts = account::getOfferedAccounts($account[0]->id,$account[0]->minage, $account[0]->maxage, $account[0]->intrestedin);
-        kint::dump($offeredaccounts);
+        //kint::dump($offeredaccounts);
         $pairs = vote::getPairs($account[0]->id);
         //$offeredaccounts = account::all();
-        //Kint::dump($pairs);
+        ////kint::dump($pairs);
         View::make('account/showAccount.html', array('accounts' => $account, 'offeredaccounts' => $offeredaccounts, 'pairs' => $pairs));
     }
   }
@@ -56,8 +56,8 @@ class accountController extends BaseController{
       );
     $account = new account($attributes);
     $errors = $account->errors();
-    Kint::dump($errors);
-    //Kint::dump($params);
+    //kint::dump($errors);
+    ////kint::dump($params);
     if(count($errors) == 0){
       // Peli on validi, hyvä homma!
       $account->save();
@@ -152,16 +152,16 @@ class accountController extends BaseController{
 
     $message = new message($attributes);
     $message->insert();
-    //Kint::dump($message);
+    ////kint::dump($message);
     $conversation = message::findAll($conversationId);
-    Kint::dump($conversationId);
+    //kint::dump($conversationId);
     //Redirect::to('/account/' . $id . '/conversation/' . $conversationId, array('message' => 'Viesti lähetetty onnistuneesti!', 'conversation' => $conversation));
     View::make('account/conversation.html', array('message' => 'Viesti lähetetty onnistuneesti!','conversation' => $conversation));
   }
 
   public static function addLike(){
     $params = $_POST;
-    kint::dump($params);
+    //kint::dump($params);
     $attributes = array(
       'account_id' => $params['account_id'],
       'liked_account_id' => $params['liked_account_id'],

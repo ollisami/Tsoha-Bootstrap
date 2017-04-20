@@ -106,8 +106,8 @@ class account extends BaseModel{
     $query->execute(array('username' => $this->username, 'password' => $this->password, 'name' => $this->name,'sex' => $this->sex, 'age' => $this->age, 'location' => $this->location, 'description' => $this->description, 'intrestedin' => $this->intrestedin, 'minage' => $this->minage, 'maxage' => $this->maxage));
     // Haetaan kyselyn tuottama rivi, joka sisältää lisätyn rivin id-sarakkeen arvon
     $row = $query->fetch();
-    //Kint::trace();
-    //Kint::dump($row);
+    ////kint::trace();
+    ////kint::dump($row);
     // Asetetaan lisätyn rivin id-sarakkeen arvo oliomme id-attribuutin arvoksi
     $this->id = $row['id'];
   }

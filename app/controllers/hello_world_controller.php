@@ -12,9 +12,9 @@
       //View::make('helloworld.html');
       $test = account::find(1);
       $allAccounts = account::all();
-    // Kint-luokan dump-metodi tulostaa muuttujan arvon
-      Kint::dump($test);
-      Kint::dump($allAccounts);
+    // //kint-luokan dump-metodi tulostaa muuttujan arvon
+      //kint::dump($test);
+      //kint::dump($allAccounts);
     }
 
     public static function frontpage(){
