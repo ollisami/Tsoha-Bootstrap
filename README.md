@@ -11,6 +11,12 @@ Sivut:
 * [Etusivu](http://ollisami.users.cs.helsinki.fi/tietokanta_ht/etusivu) - Hahmotelma etusivusta
 * [Rekisteröityminen](http://ollisami.users.cs.helsinki.fi/tietokanta_ht/rekisteroidy) - Hahmotelma palveluun rekisteröitymisestä 
 
+# Käyttöohjeet
+Sovellukseen pääsee kirjautumaan tunnuksilla <b>käyttäjätunnus: test, salasana: test</b>.
+Sovellukseen voi myös luoda uuden käyttäjän Rekisteröidy-painikkeesta.
+Listan kaikista rekisteröityneistä käyttäjistä näkee kirjautumisen jälkeen osoitteessa:
+http://ollisami.users.cs.helsinki.fi/tietokanta_ht/accounts
+
 ## Työn aihe
 
 # Blinder
