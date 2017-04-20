@@ -6,6 +6,7 @@ Yleisiä linkkejä:
 * [Linkki dokumentaatiooni](https://github.com/ollisami/Tsoha-Bootstrap/blob/master/doc/Dokumentaatio.pdf)
 * [Linkki Käsitekaavioon](https://github.com/ollisami/Tsoha-Bootstrap/blob/master/doc/k%C3%A4sitekaavio.png)
 * [Linkki tietokantakaavioon](https://github.com/ollisami/Tsoha-Bootstrap/blob/master/doc/tietokantakaavio.png)
+* [Käyttöliittymä ja järjestelmän komponentit](https://github.com/ollisami/Tsoha-Bootstrap/blob/master/doc/kayttoliittymat.png)
 
 Sivut:
 * [Etusivu](http://ollisami.users.cs.helsinki.fi/tietokanta_ht/etusivu) - Hahmotelma etusivusta
