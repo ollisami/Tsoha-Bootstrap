@@ -36,12 +36,12 @@
     accountController::showAll();
   });
 
-  $routes->get('/account/:id', 'check_logged_in', function($id){
-    accountController::show($id);
+  $routes->get('/account/:id', 'check_logged_in', function(){
+    accountController::show();
   });
 
-  $routes->get('/account/:id/edit', 'check_logged_in', function($id){
-    accountController::edit($id);
+  $routes->get('/account/:id/edit', 'check_logged_in', function(){
+    accountController::edit();
   });
 
   $routes->post('/account/:id/edit', 'check_logged_in', function($id){
@@ -56,8 +56,13 @@
     accountController::destroy($id);
   });
 
+//------------------------add like----------------------------------------
+  $routes->post('/account/addlike', 'check_logged_in', function(){
+    accountController::addLike();
+  });
 
 
+//-------------------------Conversation----------------------------------------
   $routes->get('/account/:id/keskustelu/:pairId', 'check_logged_in', function($id, $pairId){
     accountController::message($id, $pairId);
   });
@@ -66,8 +71,8 @@
     accountController::sendMessage($id, $conversationId);
   });
 
-  $routes->get('/account/:id/conversation/:conversationId', 'check_logged_in', function($conversationId){
-    accountController::showMessageBord($conversationId);
+  $routes->get('/account/:id/conversation/:conversationId', 'check_logged_in', function($id, $conversationId){
+    accountController::showMessageBord($id, $conversationId);
   });
 
 

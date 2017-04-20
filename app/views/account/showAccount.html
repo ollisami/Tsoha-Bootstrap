@@ -2,8 +2,11 @@
 {% block content %}
 {% import "macros/forms.html" as forms %}
 
-  <h1>Käyttäjä:</h1>
-            
+{% for account in accounts %}
+  <h1>Käyttäjä: {{account.name}}</h1>
+  <div id="accountId" value="{{account.id}}">
+{% endfor %}
+ <!--           
   <p>
     <a href="{{base_path}}/accounts" class="btn btn-success">Näytä kaikki käyttäjät</a>
   </p>
@@ -40,12 +43,11 @@
           <td>{{account.minage}}</td>
           <td>{{account.maxage}}</td>
           <td>
-            <!--
               {% if account.played %}
                 <label class="label label-success">pelattu
               {% else %}
                 <label class="label label-danger">kesken
-              {% endif %} -->
+              {% endif %} 
           </td>
           <td><a class="btn btn-warning" href="{{base_path}}/account/{{account.id}}/edit">Muokkaa</a></td>
           <td>{{forms.destroy_button("#{base_path}/account/#{account.id}/destroy", "Poista")}}</td>
@@ -53,24 +55,32 @@
       {% endfor %}
     </tbody>
   </table>
+-->
     <button type="button" class="btn btn-primary" id="openFindPopup">etsi pareja</button>
     <button type="button" class="btn btn-primary" id="openBrowsePopup">selaa pareja</button>
-
+    <a class="btn btn-warning" href="{{base_path}}/account/{{account.id}}/edit">Muokkaa</a>
+    {{forms.destroy_button("#{base_path}/account/#{account.id}/destroy", "Poista")}}
 
 <!-- FIND USER -->
   <div class="popup-bg" id="findUserPopup">
     <div class="account-popup">
        <span class ="close" id="close_find">&times;</span>
 
-       {% for account in offeredaccounts %}
+       {% for offered in offeredaccounts %}
         <div class="account-popup-content">
           <div class="account-popup-description">
-            <p> {{account.description}}</p>
-            <p> {{account.name}} , {{account.location}}</p>
+            <p> {{offered.description}}</p>
+            <p> {{offered.name}} , {{offered.location}}</p>
           </div>
           <div class="account-popup-buttons">
-            <button type="button" class="btn btn-primary" id="like">like</button>
-            <button type="button" class="btn btn-primary" id="dislike">dislike</button>
+            <form method="post" action="{{base_path}}/account/addlike">
+              {% for account in accounts %}
+                  <input name="account_id" value="{{account.id}}" type="hidden">
+              {% endfor %}
+                  <input name="liked_account_id" value="{{offered.id}}" type="hidden">
+                  <button type="submit" class="btn btn-primary" id="like"  name="status" value=2>like</button>
+                  <button type="submit" class="btn btn-primary" id="dislike" name="status" value=1>dislike</button>
+            </form>
           </div>
         </div>
        {% endfor %}
@@ -109,7 +119,7 @@
     </div>
   </div>
 
-    <script>
+  <script>
   var popup = document.getElementById('findUserPopup');
   var btn = document.getElementById("openFindPopup");
   var span = document.getElementById("close_find");
@@ -117,6 +127,7 @@
   var matchPopup = document.getElementById('showMatchPopup');
   var matchBtn = document.getElementById("openBrowsePopup");
   var matchSpan = document.getElementById("close_show");
+  var accountId = document.getElementById("accountId");
 
   matchBtn.onclick = function() {
       matchPopup.style.display = "block";
@@ -138,9 +149,14 @@
           matchPopup.style.display = "none";
       }
       if(event.target.id == 'like' || event.target.id == 'dislike') {
+        var offeredId = event.target.value;
+        console.log(offeredId);
+
+        accountId = accountId.name;
+        console.log(accountId);
+
         var parent = event.target.parentElement.parentElement;
-        /* Do some crazy shit */
-        parent.parentElement.removeChild(parent);
+        //parent.parentElement.removeChild(parent);
       }
   }
 </script>

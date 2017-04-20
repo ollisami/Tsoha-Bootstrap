@@ -72,7 +72,7 @@ body {
 
 .account-popup {
   width: 60%;
-  height: 80%;
+  height: 60%;
   margin: 5% auto;
   background-color: rgb(255,255,255);
   border: 3px solid #888;
@@ -124,7 +124,7 @@ body {
 
 .account-popup-pairs {
   width: 60%;
-  height: 80%;
+  height: 60%;
   margin: 5% auto;
   background-color: rgb(255,255,255);
   border: 3px solid #888;

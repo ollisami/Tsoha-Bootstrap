@@ -3,7 +3,12 @@
 class accountController extends BaseController{
 
   public static function frontpage(){
-    View::make('suunnitelmat/etusivu.html');
+    $account = BaseController::get_user_logged_in();
+      if(count($account) == 0) {
+        View::make('suunnitelmat/etusivu.html');
+      } else {
+        accountController::show();
+      }
   }
 
   public static function createAccount(){
@@ -15,12 +20,13 @@ class accountController extends BaseController{
     	View::make('account/accounts.html', array('accounts' => $accounts));
   }
 
-  public static function show($id){
-    	$account = account::find($id);
+  public static function show(){
+    	$account = BaseController::get_user_logged_in();
       if(count($account) == 0) {
         Redirect::to('/', array('error' => 'Käyttäjää ei löytynyt!'));
       } else {
-        $offeredaccounts = account::getOfferedAccounts($account[0]->minage, $account[0]->maxage, $account[0]->intrestedin);
+        $offeredaccounts = account::getOfferedAccounts($account[0]->id,$account[0]->minage, $account[0]->maxage, $account[0]->intrestedin);
+        kint::dump($offeredaccounts);
         $pairs = vote::getPairs($account[0]->id);
         //$offeredaccounts = account::all();
         //Kint::dump($pairs);
@@ -67,8 +73,8 @@ class accountController extends BaseController{
     View::make('account/new.html');
 	}
 
-  public static function edit($id){
-    $account = account::find($id);
+  public static function edit(){
+    $account = BaseController::get_user_logged_in();
      $attributes = array();
      if($account) {
         $attributes = array(
@@ -127,11 +133,12 @@ class accountController extends BaseController{
 
   public static function message($id, $pairId){
     $match = match::findWithAccount($id, $pairId);
-    Redirect::to('/account/' . $id . '/conversation/' . $match[0]->conversation_id);
+    $conversationId = $match[0]->conversation_id;
+    Redirect::to('/account/' . $id . '/conversation/' . $conversationId);
   }
 
-  public static function showMessageBord($id){
-    $conversation = message::findAll($id);
+  public static function showMessageBord($id, $conversationId){
+    $conversation = message::findAll($conversationId);
     View::make('account/conversation.html', array('conversation' => $conversation));
   }
 
@@ -147,8 +154,22 @@ class accountController extends BaseController{
     $message->insert();
     //Kint::dump($message);
     $conversation = message::findAll($conversationId);
-    Kint::dump($conversation);
+    Kint::dump($conversationId);
     //Redirect::to('/account/' . $id . '/conversation/' . $conversationId, array('message' => 'Viesti lähetetty onnistuneesti!', 'conversation' => $conversation));
     View::make('account/conversation.html', array('message' => 'Viesti lähetetty onnistuneesti!','conversation' => $conversation));
+  }
+
+  public static function addLike(){
+    $params = $_POST;
+    kint::dump($params);
+    $attributes = array(
+      'account_id' => $params['account_id'],
+      'liked_account_id' => $params['liked_account_id'],
+      'status' => $params['status']
+    );
+
+    $vote = new vote($attributes);
+    $vote ->save();
+    accountController::show();
   }
 }

@@ -8,6 +8,12 @@ class vote extends BaseModel {
     parent::__construct($attributes);
   }
 
+  public function save() {
+    $query = DB::connection()->prepare('INSERT INTO vote (account_id, liked_account_id, status) VALUES (:account_id, :liked_account_id, :status)');
+    $query->execute(array('account_id' => $this->account_id, 'liked_account_id' => $this->liked_account_id, 'status' => $this->status));
+    $query->fetch();
+  }
+
   public static function getPairs($id) {
     $query = DB::connection()->prepare('SELECT * FROM vote WHERE account_id = :id and status = 2');
     $query->execute(array('id'=>$id));
