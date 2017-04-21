@@ -35,13 +35,15 @@ class account extends BaseModel{
   public static function getOfferedAccounts($id, $minage, $maxage, $intrestedin) {
 
     ///KORJAA NÄMÄ
-    $query = DB::connection()->prepare('SELECT * FROM account, vote, match WHERE account.id != :id AND account.age <= :maxage AND account.age >= :minage AND (vote.account_id != :id OR vote.liked_account_id != account.id) AND (match.account_1_id != :id OR match.account_2_id != account.id)');
+    //$query = DB::connection()->prepare('SELECT * FROM account, vote, match WHERE account.id != :id AND account.age <= :maxage AND account.age >= :minage AND (vote.account_id != :id OR vote.liked_account_id != account.id) AND (match.account_1_id != :id OR match.account_2_id != account.id)');
+    $query = DB::connection()->prepare('SELECT * FROM account WHERE id != :id AND age <= :maxage AND age >= :minage');
 
     if($intrestedin != 3) {
-      $query = DB::connection()->prepare('SELECT * FROM account, vote WHERE account.id != :id AND account.age <= :maxage AND account.age >= :minage 
-        AND account.sex = :intrestedin
-        AND (vote.account_id != :id OR vote.liked_account_id != account.id)
-        AND (match.account_1_id != :id OR match.account_2_id != account.id)');
+ //     $query = DB::connection()->prepare('SELECT * FROM account, vote WHERE account.id != :id AND account.age <= :maxage AND account.age >= :minage 
+   //     AND account.sex = :intrestedin
+     //   AND (vote.account_id != :id OR vote.liked_account_id != account.id)
+       // AND (match.account_1_id != :id OR match.account_2_id != account.id)');
+            $query = DB::connection()->prepare('SELECT * FROM account, vote WHERE id != :id AND age <= :maxage AND age >= :minage AND sex = :intrestedin');
 
       $query->execute(array('id'=>$id, 'maxage'=>$maxage, 'minage'=>$minage, 'intrestedin'=>$intrestedin));
     }else {

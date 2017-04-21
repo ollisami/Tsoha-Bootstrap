@@ -6,7 +6,7 @@
   <h1>Käyttäjä: {{account.name}}</h1>
   <div id="accountId" value="{{account.id}}">
 {% endfor %}
- <!--           
+        
   <p>
     <a href="{{base_path}}/accounts" class="btn btn-success">Näytä kaikki käyttäjät</a>
   </p>
@@ -55,11 +55,12 @@
       {% endfor %}
     </tbody>
   </table>
--->
+
     <button type="button" class="btn btn-primary" id="openFindPopup">etsi pareja</button>
     <button type="button" class="btn btn-primary" id="openBrowsePopup">selaa pareja</button>
-    <a class="btn btn-warning" href="{{base_path}}/account/{{account.id}}/edit">Muokkaa</a>
+    <!--<a class="btn btn-warning" href="{{base_path}}/account/{{account.id}}/edit">Muokkaa</a>
     {{forms.destroy_button("#{base_path}/account/#{account.id}/destroy", "Poista")}}
+  -->
 
 <!-- FIND USER -->
   <div class="popup-bg" id="findUserPopup">
