@@ -24,6 +24,7 @@
         <th>intrestedin</th>
         <th>minage</th>
         <th>maxage</th>
+        <th>Hashtags</th>
         <th></th>
         <th></th>
       </tr>
@@ -42,13 +43,15 @@
           <td>{{account.intrestedin}}</td>
           <td>{{account.minage}}</td>
           <td>{{account.maxage}}</td>
+          <td>{{hashtags}}</td>
+          <!--
           <td>
               {% if account.played %}
                 <label class="label label-success">pelattu
               {% else %}
                 <label class="label label-danger">kesken
               {% endif %} 
-          </td>
+          </td> -->
           <td><a class="btn btn-warning" href="{{base_path}}/account/{{account.id}}/edit">Muokkaa</a></td>
           <td>{{forms.destroy_button("#{base_path}/account/#{account.id}/destroy", "Poista")}}</td>
         </tr>

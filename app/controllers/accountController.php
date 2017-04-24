@@ -28,19 +28,22 @@ class accountController extends BaseController{
         $offeredaccounts = account::getOfferedAccounts($account[0]->id,$account[0]->minage, $account[0]->maxage, $account[0]->intrestedin);
         //kint::dump($offeredaccounts);
         $pairs = vote::getPairs($account[0]->id);
+        $tags = hashtag::findAllWithUser($account[0]->id);
+        $tagString = "";
+        foreach ($tags as $t) {
+          $content = $t->content;
+          $tagString = $tagString.'#'.$content." ";
+        }
+
         //$offeredaccounts = account::all();
-        ////kint::dump($pairs);
-        View::make('account/showAccount.html', array('accounts' => $account, 'offeredaccounts' => $offeredaccounts, 'pairs' => $pairs));
+        View::make('account/showAccount.html', array('accounts' => $account, 'offeredaccounts' => $offeredaccounts, 'pairs' => $pairs, 'hashtags' => $tagString));
     }
   }
 
 
 
  	public static function store(){
-    // POST-pyynnön muuttujat sijaitsevat $_POST nimisessä assosiaatiolistassa
       $params = $_POST;
-    // Alustetaan uusi account-luokan olion käyttäjän syöttämillä arvoilla
-
 
       $attributes = array(
         'username' => $params['username'],
@@ -59,14 +62,39 @@ class accountController extends BaseController{
     //kint::dump($errors);
     ////kint::dump($params);
     if(count($errors) == 0){
-      // Peli on validi, hyvä homma!
       $account->save();
+      accountController::sethashtags($params['hashtags'], $account);
       Redirect::to('/', array('message' => 'Käyttäjä on lisätty tietokantaan!'));
     }else{
-      // Pelissä oli jotain vikaa :(
       View::make('/account/new.html', array('errors' => $errors, 'attributes' => $attributes));
     }
 
+  }
+
+  public static function sethashtags($tagstring, $account){       
+        $tagstring = preg_replace('/\s+/', '', $tagstring);
+        $tags = explode("#", $tagstring);
+        kint::dump($tags);
+        if(count($tags) > 0) {
+          foreach ($tags as $tag) {
+            if (!empty($tag)) {
+              kint::dump($tag);
+              $t = hashtag::findAllByContent($tag);
+              if(count($t) == 0) {
+                $id = hashtag::insert($tag);
+                $t = new hashtag(array('id' => $id, 'content' => $tag));
+              } else {
+                $t = $t[0];
+              }
+              // kint::dump(hashtag::checkIfUserHashtagExist($account->id, $t-> $id));
+              //if(!hashtag::checkIfUserHashtagExist($account->id, $t-> $id)) {
+              hashtag::insertUserhashtag($account->id, $t->id);
+              //}
+              kint::dump($account->id);
+              kint::dump($t);
+            }
+          }
+        }
   }
 
 	public static function create(){
@@ -89,7 +117,14 @@ class accountController extends BaseController{
           'maxage' => $account[0]->maxage,
         );
       }
-    View::make('account/edit.html', array('attributes' => $attributes));
+      $tags = hashtag::findAllWithUser($account[0]->id);
+      $tagString = "";
+        foreach ($tags as $t) {
+          $content = $t->content;
+          $tagString = $tagString.'#'.$content." ";
+        }
+      $hashtags = array('tags' => $tagString);
+    View::make('account/edit.html', array('attributes' => $attributes, 'hashtags'=>$hashtags));
   }
 
   public static function update($id){
@@ -107,9 +142,6 @@ class accountController extends BaseController{
       'minage' => $params['minage'],
       'maxage' => $params['maxage'],
     );
-
-    // Alustetaan account-olio käyttäjän syöttämillä tiedoilla
-    //$account = account::find($id);
     $account = new account($attributes);
     $account->id = $id;
     $errors = $account->errors();
@@ -118,9 +150,8 @@ class accountController extends BaseController{
       $message = 'Error: ';
       View::make('account/edit.html', array('errors' => $errors, 'attributes' => $account));
     }else{
-      // Kutsutaan alustetun olion update-metodia, joka päivittää pelin tiedot tietokannassa
       $account->update();
-
+      accountController::sethashtags($params['hashtags'], $account);
       Redirect::to('/account/' . $account->id, array('message' => 'Käyttäjää on muokattu onnistuneesti!'));
     }
   }

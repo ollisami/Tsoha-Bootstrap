@@ -40,7 +40,7 @@
 
       <div class="form-group">
         <label>description</label>
-        <textarea name="description" class="form-control" value="{{attributes.description}}"></textarea>
+        <textarea name="description" class="form-control">{{attributes.description}}</textarea>
       </div>
 
       <div class="form-group">
@@ -63,9 +63,14 @@
       </div>
 
       <div class="form-group">
+        <label>Hashtagit</label>
+        <textarea name="hashtags" class="form-control">{{hashtags.tags}}</textarea>
+      </div>
+
+      <div class="form-group">
         <label for="exampleInputFile">File input</label>
         <input type="file" id="exampleInputFile">
-        <p class="help-block">Example block-level help text here.</p>
+        <p class="help-block">Lisää kuvasi tähän.</p>
       </div>
 
       <div class="form-group">

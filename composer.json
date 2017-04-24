@@ -7,7 +7,8 @@
 			"app/models/account.php",
 			"app/models/vote.php",
 			"app/models/match.php",
-			"app/models/message.php"
+			"app/models/message.php",
+			"app/models/hashtag.php"
 		]
 	},
 	"require": {

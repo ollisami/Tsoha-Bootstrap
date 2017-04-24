@@ -39,5 +39,11 @@ CREATE TABLE Message(
 );
 
 CREATE TABLE Hashtag(
-   name varchar(100) NOT NULL
+  id SERIAL PRIMARY KEY,
+  content varchar(100) NOT NULL
+);
+
+CREATE TABLE userHashtag(
+  account_id INTEGER REFERENCES Account(id),
+  hashtag_id INTEGER REFERENCES Hashtag(id)
 );
