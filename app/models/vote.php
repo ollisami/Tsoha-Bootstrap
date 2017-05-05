@@ -14,6 +14,21 @@ class vote extends BaseModel {
     $query->fetch();
   }
 
+  public function getAllVotesWithID($accountId, $likedId) {
+    $query = DB::connection()->prepare('SELECT * FROM vote WHERE account_id = :accountId and liked_account_id = :likedId');
+    $query->execute(array('accountId'=>$accountId, 'likedId'=>$likedId));
+    $rows = $query->fetchAll();
+    $givenLikes = array();
+    foreach($rows as $row){
+      $givenLikes[] = new vote(array(
+        'account_id' => $row['account_id'],
+        'liked_account_id' => $row['liked_account_id'],
+        'status' => $row['status']
+      ));
+    }
+    return $givenLikes;
+  }
+
   public static function getPairs($id) {
     $query = DB::connection()->prepare('SELECT * FROM vote WHERE account_id = :id and status = 2');
     $query->execute(array('id'=>$id));

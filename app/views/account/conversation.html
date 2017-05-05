@@ -16,5 +16,34 @@
 		</form>
 	</div>
 </div>
+<p></p>
+  	{% if conversationStatus >= 10 %}
+  		<button type="submit" class="btn btn-primary" id="showImages">Näytä kuvat</button>
+
+  		 <div class="popup-bg" id="showImagePopup">
+		    <div class="account-popup">
+		       <span class ="close" id="close_image">&times;</span>
+		  		{% if gender == 1 %}
+		  			<div class="image-box-man" id="image-box"></div>
+		  		{% else %}
+		  			<div class="image-box-woman" id="image-box"></div>
+		  		{% endif %} 
+		  	</div>
+		 </div>
+
+  	{% endif %} 
+
+ <script>
+  var btn = document.getElementById("showImages");
+  var span = document.getElementById("showImagePopup");
+  var close = document.getElementById("close_image")
+
+  close.onclick = function() {
+      span.style.display = "none";
+  }
+  btn.onclick = function() {
+      span.style.display = "block";
+  }
+</script>
 
 {% endblock %}

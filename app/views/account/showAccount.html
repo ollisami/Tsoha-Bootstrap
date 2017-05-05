@@ -66,18 +66,25 @@
   -->
 
 <!-- FIND USER -->
-  <div class="popup-bg" id="findUserPopup">
+  {% if showPopUp == true %}
+    <div class="popup-bg" id="findUserPopup" style="display:block">
+  {% else %}
+    <div class="popup-bg" id="findUserPopup">
+  {% endif %} 
     <div class="account-popup">
        <span class ="close" id="close_find">&times;</span>
 
        {% for offered in offeredaccounts %}
         <div class="account-popup-content">
           <div class="account-popup-description">
-            <p> {{offered.description}}</p>
-            <p> {{offered.name}} , {{offered.location}}</p>
+            <p class="desc"> {{offered.description}}</p>
+            <p class="name"> {{offered.name}} , {{offered.location}}</p>
+
+            <p class="blue">{{offered.sharedTags}}<p>
           </div>
           <div class="account-popup-buttons">
-            <form method="post" action="{{base_path}}/account/addlike">
+
+            <form method="post" action="{{base_path}}/account/addlike"> 
               {% for account in accounts %}
                   <input name="account_id" value="{{account.id}}" type="hidden">
               {% endfor %}
@@ -106,8 +113,8 @@
        {% for pair in pairs %}
         <div class="account-popup-content">
           <div class="account-popup-description">
-            <p> {{pair.description}}</p>
-            <p> {{pair.name}} , {{pair.location}}</p>
+            <p  class="desc"> {{pair.description}}</p>
+            <p class="name"> {{pair.name}} , {{pair.location}}</p>
           </div>
           <div class="account-popup-buttons">
             <a class="btn btn-primary" href="{{base_path}}/account/{{accounts[0].id}}/keskustelu/{{pair.id}}">Keskustele</a>
@@ -153,13 +160,13 @@
           matchPopup.style.display = "none";
       }
       if(event.target.id == 'like' || event.target.id == 'dislike') {
-        var offeredId = event.target.value;
-        console.log(offeredId);
+        //var offeredId = event.target.value;
+        //console.log(offeredId);
 
-        accountId = accountId.name;
-        console.log(accountId);
+        //accountId = accountId.name;
+        //console.log(accountId);
 
-        var parent = event.target.parentElement.parentElement;
+        //var parent = event.target.parentElement.parentElement;
         //parent.parentElement.removeChild(parent);
       }
   }

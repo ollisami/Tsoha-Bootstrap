@@ -9,24 +9,25 @@ class match extends BaseModel {
   }
 
   public static function createPair($id_1, $id_2) {
-  	if(!match::findWithAccount($id_1, $id_2)) {
-	  	$conversation = match::createConversation();
-	    $query = DB::connection()->prepare('INSERT INTO Match (account_1_id,account_2_id,conversation_id) VALUES (:id_1,:id_2,:conversation) RETURNING id');
-	    // Muistathan, että olion attribuuttiin pääse syntaksilla $this->attribuutin_nimi
-	    $query->execute(array('id_1' => $id_1, 'id_2' => $id_2, 'conversation' => $conversation[0]));
-	    // Haetaan kyselyn tuottama rivi, joka sisältää lisätyn rivin id-sarakkeen arvon
-	    $row = $query->fetch();
-	    ////kint::trace();
-	    //kint::dump($row);
-	    // Asetetaan lisätyn rivin id-sarakkeen arvo oliomme id-attribuutin arvoksi
-	    $params = array();
-	    if($row){
-	    	$id = $row['id'];
-	    	$match = match::find($id);
-	    	//kint::dump($match);
-		}
-	}
+    	if(!match::findWithAccount($id_1, $id_2)) {
+  	  	$conversation = match::createConversation();
+  	    $query = DB::connection()->prepare('INSERT INTO Match (account_1_id,account_2_id,conversation_id) VALUES (:id_1,:id_2,:conversation) RETURNING id');
+  	    // Muistathan, että olion attribuuttiin pääse syntaksilla $this->attribuutin_nimi
+  	    $query->execute(array('id_1' => $id_1, 'id_2' => $id_2, 'conversation' => $conversation[0]));
+  	    // Haetaan kyselyn tuottama rivi, joka sisältää lisätyn rivin id-sarakkeen arvon
+  	    $row = $query->fetch();
+  	    ////kint::trace();
+  	    //kint::dump($row);
+  	    // Asetetaan lisätyn rivin id-sarakkeen arvo oliomme id-attribuutin arvoksi
+  	    $params = array();
+  	    if($row){
+  	    	$id = $row['id'];
+  	    	$match = match::find($id);
+  	    	//kint::dump($match);
+  		}
+  	}
   }
+
 
   public static function find($id) {
     $query = DB::connection()->prepare('SELECT * FROM Match WHERE id = :id LIMIT 1');

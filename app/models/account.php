@@ -2,7 +2,7 @@
 
 class account extends BaseModel{
 
-  public $id ,$username, $password, $name, $sex, $age, $location, $description, $intrestedin, $minage, $maxage, $validators;
+  public $id ,$username, $password, $name, $sex, $age, $location, $description, $intrestedin, $minage, $maxage, $validators, $sharedTags;
 
   public function __construct($attributes){
     parent::__construct($attributes);
@@ -33,15 +33,10 @@ class account extends BaseModel{
   }
 
   public static function getOfferedAccounts($id, $minage, $maxage, $intrestedin) {
-
-    ///KORJAA NÄMÄ
-    //$query = DB::connection()->prepare('SELECT * FROM account, vote, match WHERE account.id != :id AND account.age <= :maxage AND account.age >= :minage AND (vote.account_id != :id OR vote.liked_account_id != account.id) AND (match.account_1_id != :id OR match.account_2_id != account.id)');
     $query = DB::connection()->prepare('SELECT * FROM account WHERE id != :id AND age <= :maxage AND age >= :minage');
 
     if($intrestedin != 3) {
       $query = DB::connection()->prepare('SELECT * FROM account  WHERE id != :id AND age <= :maxage AND age >= :minage AND sex = :intrestedin');
-      //$query = DB::connection()->prepare('SELECT * FROM account  WHERE id != :id AND age <= :maxage AND age >= :minage AND sex = :intrestedin
-       //LEFT OUTER JOIN Vote ON vote.account_id != :id OR vote.liked_account_id != account.id');
       $query->execute(array('id'=>$id, 'maxage'=>$maxage, 'minage'=>$minage, 'intrestedin'=>$intrestedin));
     }else {
       $query->execute(array('id'=>$id, 'maxage'=>$maxage, 'minage'=>$minage));
@@ -65,7 +60,19 @@ class account extends BaseModel{
       ));
     }
 
-    return $accounts;
+
+
+    $possibleAccounts = array();
+    foreach($accounts as $account){
+        $vote = vote::getAllVotesWithID($id, $account->id);
+        $match = match::findWithAccount($id, $account->id);
+        if(count($vote) == 0 && count($match) == 0 ) {
+          array_push($possibleAccounts, $account);
+        }
+
+    }
+    return $possibleAccounts;
+    //return $accounts;
   }
 
    public static function all(){
@@ -130,6 +137,26 @@ class account extends BaseModel{
 
 
   public function destroy(){
+    $query = DB::connection()->prepare('DELETE FROM Match WHERE account_1_id = :id');
+    $t = $this->id;
+    $query->execute(array('id' => $t));
+
+    $query = DB::connection()->prepare('DELETE FROM Match WHERE account_2_id = :id');
+    $t = $this->id;
+    $query->execute(array('id' => $t));
+
+    $query = DB::connection()->prepare('DELETE FROM Vote WHERE account_id = :id');
+    $t = $this->id;
+    $query->execute(array('id' => $t));
+
+    $query = DB::connection()->prepare('DELETE FROM Vote WHERE liked_account_id = :id');
+    $t = $this->id;
+    $query->execute(array('id' => $t));
+
+    $query = DB::connection()->prepare('DELETE FROM userHashtag WHERE account_id = :id');
+    $t = $this->id;
+    $query->execute(array('id' => $t));
+
     $query = DB::connection()->prepare('DELETE FROM Account WHERE id = :id');
     $t = $this->id;
     $query->execute(array('id' => $t));

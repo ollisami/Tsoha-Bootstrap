@@ -71,12 +71,13 @@ body {
 }
 
 .account-popup {
-  width: 60%;
+  width: 40%;
   height: 60%;
   margin: 5% auto;
   background-color: rgb(255,255,255);
   border: 3px solid #888;
   overflow: hidden;
+  box-shadow: 10px 10px 5px #888888;
 
 }
 
@@ -105,8 +106,12 @@ body {
 .close-popup {
     color: #aaa;
     float: right;
-    font-size: 28px;
+    font-size: 3em;
     font-weight: bold;
+}
+
+.close {
+    font-size: 3em;
 }
 
 .popup-bg-pairs {
@@ -123,11 +128,46 @@ body {
 }
 
 .account-popup-pairs {
-  width: 60%;
+  width: 40%;
   height: 60%;
   margin: 5% auto;
   background-color: rgb(255,255,255);
   border: 3px solid #888;
   overflow: auto;
+  box-shadow: 10px 10px 5px #888888;
 
+}
+
+.image-box-man {
+  display: block;
+  height: 500px;
+  width: auto;
+  background-image: url("/tietokanta_ht/assets/Images/mies.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.image-box-woman {
+  display: block;
+  height: 500px;
+  width: auto;
+  background-image: url("/tietokanta_ht/assets/Images/nainen.jpg");
+  background-repeat: no-repeat;
+  background-position: center; 
+}
+
+.blue {
+  font-size: 1.4em;
+  color: blue;
+}
+
+.name {
+  font-size: 1.4em;
+  color: #0d254c;
+  text-decoration: underline;
+}
+
+.desc {
+  font-size: 1.4em;
+  color: #0d254c;
 }

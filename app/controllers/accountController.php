@@ -20,6 +20,15 @@ class accountController extends BaseController{
     	View::make('account/accounts.html', array('accounts' => $accounts));
   }
 
+  public function hastagsToString($tags) {
+    $tagString = "";
+    foreach ($tags as $t) {
+      $content = $t->content;
+      $tagString = $tagString.'#'.$content." ";
+    }
+    return $tagString;
+  }
+
   public static function show(){
     	$account = BaseController::get_user_logged_in();
       if(count($account) == 0) {
@@ -29,11 +38,19 @@ class accountController extends BaseController{
         //kint::dump($offeredaccounts);
         $pairs = vote::getPairs($account[0]->id);
         $tags = hashtag::findAllWithUser($account[0]->id);
-        $tagString = "";
-        foreach ($tags as $t) {
-          $content = $t->content;
-          $tagString = $tagString.'#'.$content." ";
+        foreach ($offeredaccounts as $offeredAccount) {
+          $offeredTags = hashtag::findAllWithUser($offeredAccount->id);
+          $sameTags = array();
+          foreach ($offeredTags as $offeredTag) {
+              if (in_array($offeredTag, $tags)) {
+                  array_push($sameTags, $offeredTag);
+              }
+          }
+          $tagString = accountController::hastagsToString($sameTags);
+          $offeredAccount->sharedTags = $tagString;
         }
+
+        $tagString = accountController::hastagsToString($tags);
 
         //$offeredaccounts = account::all();
         View::make('account/showAccount.html', array('accounts' => $account, 'offeredaccounts' => $offeredaccounts, 'pairs' => $pairs, 'hashtags' => $tagString));
@@ -170,7 +187,10 @@ class accountController extends BaseController{
 
   public static function showMessageBord($id, $conversationId){
     $conversation = message::findAll($conversationId);
-    View::make('account/conversation.html', array('conversation' => $conversation));
+    $conversationStatus = count($conversation);
+    $account = account::find($id);
+
+    View::make('account/conversation.html', array('conversation' => $conversation, 'conversationStatus' => $conversationStatus, 'gender' => $account[0]->sex));
   }
 
   public static function sendMessage($id, $conversationId){
@@ -183,11 +203,10 @@ class accountController extends BaseController{
 
     $message = new message($attributes);
     $message->insert();
-    ////kint::dump($message);
     $conversation = message::findAll($conversationId);
-    //kint::dump($conversationId);
-    //Redirect::to('/account/' . $id . '/conversation/' . $conversationId, array('message' => 'Viesti lähetetty onnistuneesti!', 'conversation' => $conversation));
-    View::make('account/conversation.html', array('message' => 'Viesti lähetetty onnistuneesti!','conversation' => $conversation));
+    $conversationStatus = count($conversation);
+    $account = account::find($id);
+     View::make('account/conversation.html', array('message' => 'Viesti lähetetty onnistuneesti!','conversation' => $conversation, 'conversationStatus' => $conversationStatus, 'gender' => $account[0]->sex));
   }
 
   public static function addLike(){
@@ -201,6 +220,31 @@ class accountController extends BaseController{
 
     $vote = new vote($attributes);
     $vote ->save();
-    accountController::show();
+
+    $account = BaseController::get_user_logged_in();
+    if(count($account) == 0) {
+      Redirect::to('/', array('error' => 'Käyttäjää ei löytynyt!'));
+    } else {
+      $offeredaccounts = account::getOfferedAccounts($account[0]->id,$account[0]->minage, $account[0]->maxage, $account[0]->intrestedin);
+      //kint::dump($offeredaccounts);
+      $pairs = vote::getPairs($account[0]->id);
+      $tags = hashtag::findAllWithUser($account[0]->id);
+      foreach ($offeredaccounts as $offeredAccount) {
+        $offeredTags = hashtag::findAllWithUser($offeredAccount->id);
+        $sameTags = array();
+        foreach ($offeredTags as $offeredTag) {
+            if (in_array($offeredTag, $tags)) {
+                array_push($sameTags, $offeredTag);
+            }
+        }
+        $tagString = accountController::hastagsToString($sameTags);
+        $offeredAccount->sharedTags = $tagString;
+      }
+
+      $tagString = accountController::hastagsToString($tags);
+
+      //$offeredaccounts = account::all();
+      View::make('account/showAccount.html', array('accounts' => $account, 'offeredaccounts' => $offeredaccounts, 'pairs' => $pairs, 'hashtags' => $tagString, 'showPopUp' => true));
+    }
   }
 }
